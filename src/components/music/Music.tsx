@@ -88,13 +88,12 @@ const handleVolumeChange = (value: number[]) => {
 };
 
   return (
-    <div className="flex justify-center">
+    <div className="text-center">
       <div>
-        <motion.img
+        <img
           src={currentSong.coverUrl}
           alt="Cover"
           style={{ width: "300px", height: "300px" }}
-          whileHover={{ scale: 1.2 }}
         />
       </div>
       <input 
@@ -110,9 +109,11 @@ const handleVolumeChange = (value: number[]) => {
       </div>
       <div>
         <button onClick={handlePrevious}>戻る</button>
-        <button onClick={togglePlayPause}>
+        <motion.button onClick={togglePlayPause}
+        whileTap="tap"
+  whileHover="hover">
           {isPlaying ? "一時停止" : "再生"}
-        </button>
+        </motion.button>
         <motion.button onClick={handleNext}>次へ</motion.button>
       </div>
       <audio ref={audioRef}
