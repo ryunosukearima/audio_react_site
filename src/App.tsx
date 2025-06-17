@@ -1,16 +1,13 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import Music from '../src/components/music/Music'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-<div className="bg-blue-500 text-white p-4">
-      Tailwind CSS 動作テスト
-    </div>
+      <div className="bg-blue-500 text-white p-4">
+        Tailwind CSS 動作テスト
+      </div>
+      <Music />
     </>
   )
 }
