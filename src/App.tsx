@@ -3,12 +3,9 @@ import Music from '../src/components/music/Music'
 function App() {
 
   return (
-    <>
-      <div className="bg-blue-500 text-white p-4">
-        Tailwind CSS 動作テスト
-      </div>
+    <div className='bg-slate-500 w-full h-screen'>
       <Music />
-    </>
+    </div>
   )
 }
 

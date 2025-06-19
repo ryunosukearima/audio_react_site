@@ -89,62 +89,64 @@ import MusicData from "./MusicData";
 
   return (
     <div className="text-center">
-      <div className="text-center">
-        <img
-          className="inline-block"
-          src={currentSong.coverUrl}
-          alt="Cover"
-          style={{ width: "300px", height: "300px" }}
-        />
-      </div>
-      <input
-        className="
-          appearance-none bg-transparent
-        [&::-webkit-slider-runnable-track]:bg-gray-300
-        [&::-webkit-slider-runnable-track]:rounded-full
-        [&::-webkit-slider-thumb]:appearance-none
-        [&::-webkit-slider-thumb]:h-4
-        [&::-webkit-slider-thumb]:w-4
-        [&::-webkit-slider-thumb]:bg-blue-500
-        [&::-webkit-slider-thumb]:rounded-full"
-        id= "inputRange"
-        type="range"
-        min={0}
-        max={duration}
-        value={timePosition}
-        onInput={handleChangeTimePosition}>
-      </input>
-      <div>
-        <h2>{currentSong.title}</h2>
-        <p>{currentSong.artist}</p>
-      </div>
-      <div>
-        <button onClick={handlePrevious}>戻る</button>
-        <motion.button onClick={togglePlayPause}
-          whileTap="tap"
-          whileHover="hover">
-            {isPlaying ? "一時停止" : "再生"}
-          </motion.button>
-          <motion.button onClick={handleNext}>次へ</motion.button>
-      </div>
-      <audio ref={audioRef}
-        src={currentSong.musicUrl}
-        onEnded={handleNext}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-      />
       <div className="">
-        <p>a</p>
-        <motion.input
-        type="range"
-        value={volume}
-        max={100}
-        min={0}
-        defaultValue={50}
-        step={1}
-        onChange={(e) => handleVolumeChange([parseInt(e.target.value)])}
-        ></motion.input>
-        <p>a</p>
+        <div className="text-center">
+          <img
+            className="inline-block"
+            src={currentSong.coverUrl}
+            alt="Cover"
+            style={{ width: "300px", height: "300px" }}
+          />
+        </div>
+        <input
+          className="
+            appearance-none bg-transparent
+          [&::-webkit-slider-runnable-track]:bg-gray-300
+          [&::-webkit-slider-runnable-track]:rounded-full
+          [&::-webkit-slider-thumb]:appearance-none
+          [&::-webkit-slider-thumb]:h-4
+          [&::-webkit-slider-thumb]:w-4
+          [&::-webkit-slider-thumb]:bg-blue-500
+          [&::-webkit-slider-thumb]:rounded-full"
+          id= "inputRange"
+          type="range"
+          min={0}
+          max={duration}
+          value={timePosition}
+          onInput={handleChangeTimePosition}>
+        </input>
+        <div>
+          <h2>{currentSong.title}</h2>
+          <p>{currentSong.artist}</p>
+        </div>
+        <div>
+          <button onClick={handlePrevious}>戻る</button>
+          <motion.button onClick={togglePlayPause}
+            whileTap="tap"
+            whileHover="hover">
+              {isPlaying ? "一時停止" : "再生"}
+            </motion.button>
+            <button onClick={handleNext}>次へ</button>
+        </div>
+        <audio ref={audioRef}
+          src={currentSong.musicUrl}
+          onEnded={handleNext}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+        />
+        <div className="text-center">
+          <span>a</span>
+          <motion.input
+          type="range"
+          value={volume}
+          max={100}
+          min={0}
+          defaultValue={50}
+          step={1}
+          onChange={(e) => handleVolumeChange([parseInt(e.target.value)])}
+          ></motion.input>
+          <span>a</span>
+        </div>
       </div>
       
       
