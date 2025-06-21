@@ -92,51 +92,65 @@ import MusicData from "./MusicData";
       <div className="">
         <div className="text-center">
           <img
-            className="inline-block"
-            src={currentSong.coverUrl}
-            alt="Cover"
-            style={{ width: "300px", height: "300px" }}
+          className="inline-block rounded-2xl"
+          src={currentSong.coverUrl}
+          alt="Cover"
+          style={{ width: "200px", height: "200px" }}
           />
         </div>
+        <div>
+          <h1>{currentSong.title}</h1>
+          <h4>{currentSong.artist}</h4>
+        </div>
         <input
-          className="
-            appearance-none bg-transparent
-          [&::-webkit-slider-runnable-track]:bg-gray-300
-          [&::-webkit-slider-runnable-track]:rounded-full
-          [&::-webkit-slider-thumb]:appearance-none
-          [&::-webkit-slider-thumb]:h-4
-          [&::-webkit-slider-thumb]:w-4
-          [&::-webkit-slider-thumb]:bg-blue-500
-          [&::-webkit-slider-thumb]:rounded-full"
-          id= "inputRange"
-          type="range"
-          min={0}
-          max={duration}
-          value={timePosition}
-          onInput={handleChangeTimePosition}>
+        className="
+        w-44
+        appearance-none bg-transparent
+        [&::-webkit-slider-runnable-track]:bg-gray-300
+        [&::-webkit-slider-runnable-track]:rounded-full
+        [&::-webkit-slider-thumb]:appearance-none
+        [&::-webkit-slider-thumb]:h-3
+        [&::-webkit-slider-thumb]:w-3
+        [&::-webkit-slider-thumb]:bg-blue-500
+        [&::-webkit-slider-thumb]:rounded-full
+        "
+        type="range"
+        min={0}
+        max={duration}
+        value={timePosition}
+        onInput={handleChangeTimePosition}>
         </input>
         <div>
-          <h2>{currentSong.title}</h2>
-          <p>{currentSong.artist}</p>
+        <button onClick={handlePrevious}>戻る</button>
+        <motion.button 
+        onClick={togglePlayPause}
+        whileTap="tap"
+        whileHover="hover">
+        {isPlaying ? "〓" : "▲"}
+        </motion.button>
+        <button onClick={handleNext}>次へ</button>
         </div>
-        <div>
-          <button onClick={handlePrevious}>戻る</button>
-          <motion.button onClick={togglePlayPause}
-            whileTap="tap"
-            whileHover="hover">
-              {isPlaying ? "一時停止" : "再生"}
-            </motion.button>
-            <button onClick={handleNext}>次へ</button>
-        </div>
-        <audio ref={audioRef}
-          src={currentSong.musicUrl}
-          onEnded={handleNext}
-          onTimeUpdate={handleTimeUpdate}
-          onLoadedMetadata={handleLoadedMetadata}
+        <audio 
+        ref={audioRef}
+        src={currentSong.musicUrl}
+        onEnded={handleNext}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
         />
         <div className="text-center">
           <span>a</span>
-          <motion.input
+          <input
+          className="
+          w-36
+          appearance-none bg-transparent
+          [&::-webkit-slider-runnable-track]:bg-gray-300
+          [&::-webkit-slider-runnable-track]:rounded-full
+          [&::-webkit-slider-thumb]:appearance-none
+          [&::-webkit-slider-thumb]:h-3
+          [&::-webkit-slider-thumb]:w-3
+          [&::-webkit-slider-thumb]:bg-blue-500
+          [&::-webkit-slider-thumb]:rounded-full
+          "
           type="range"
           value={volume}
           max={100}
@@ -144,7 +158,7 @@ import MusicData from "./MusicData";
           defaultValue={50}
           step={1}
           onChange={(e) => handleVolumeChange([parseInt(e.target.value)])}
-          ></motion.input>
+          ></input>
           <span>a</span>
         </div>
       </div>
