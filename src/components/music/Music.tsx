@@ -88,8 +88,8 @@ import MusicData from "./MusicData";
   };
 
   return (
-    <div className="text-center">
-      <div className="">
+    <div className="flex justify-center text-center">
+      <div className="bg-gray-300 rounded-2xl p-4">
         <div className="text-center">
           <img
           className="inline-block rounded-2xl"
@@ -104,9 +104,9 @@ import MusicData from "./MusicData";
         </div>
         <input
         className="
-        w-44
+        w-48
         appearance-none bg-transparent
-        [&::-webkit-slider-runnable-track]:bg-gray-300
+        [&::-webkit-slider-runnable-track]:bg-gray-100
         [&::-webkit-slider-runnable-track]:rounded-full
         [&::-webkit-slider-thumb]:appearance-none
         [&::-webkit-slider-thumb]:h-3
@@ -123,6 +123,7 @@ import MusicData from "./MusicData";
         <div>
         <button onClick={handlePrevious}>戻る</button>
         <motion.button 
+        className="rotate-90 text-gray-600"
         onClick={togglePlayPause}
         whileTap="tap"
         whileHover="hover">
@@ -137,13 +138,13 @@ import MusicData from "./MusicData";
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         />
-        <div className="text-center">
-          <span>a</span>
+        <div className="flex justify-center">
+          <img src="/img/vol_0.png" alt="" className="size-4 mr-1"/>
           <input
           className="
           w-36
           appearance-none bg-transparent
-          [&::-webkit-slider-runnable-track]:bg-gray-300
+          [&::-webkit-slider-runnable-track]:bg-gray-100
           [&::-webkit-slider-runnable-track]:rounded-full
           [&::-webkit-slider-thumb]:appearance-none
           [&::-webkit-slider-thumb]:h-3
@@ -159,7 +160,7 @@ import MusicData from "./MusicData";
           step={1}
           onChange={(e) => handleVolumeChange([parseInt(e.target.value)])}
           ></input>
-          <span>a</span>
+          <img src="/img/vol_100.png" alt="" className="size-4 ml-1"/>
         </div>
       </div>
       
