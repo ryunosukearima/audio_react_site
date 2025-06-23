@@ -15,14 +15,28 @@ import MusicData from "./MusicData";
         id: 1,
         title: "mix1",
         artist: "artist1",
-        coverUrl: "/img/walkure.jpg",
+        coverUrl: "/img/audioImage/walkure.jpg",
         musicUrl: "/audio/FIRST_LOVE_SONG.mp3",
     },
     {
     id: 2,
     title: "mix2",
     artist: "artist2",
-    coverUrl: "/img/kiri.jpg",
+    coverUrl: "/img/audioImage/kiri.jpg",
+    musicUrl: "/audio/Meteor_Light.mp3"     
+    },
+    {
+    id: 2,
+    title: "mix3",
+    artist: "artist3",
+    coverUrl: "/img/audioImage/misuzu.jpg",
+    musicUrl: "/audio/Howling_over_the_World.mp3"     
+    },
+    {
+    id: 2,
+    title: "mix4",
+    artist: "artist4",
+    coverUrl: "/img/audioImage/kiri.jpg",
     musicUrl: "/audio/Meteor_Light.mp3"     
     }
   ]
@@ -89,7 +103,7 @@ import MusicData from "./MusicData";
 
   return (
     <div className="flex justify-center text-center">
-      <div className="bg-gray-300 rounded-2xl p-4">
+      <div className="bg-gray-100 rounded-2xl p-4">
         <div className="text-center">
           <img
           className="inline-block rounded-2xl"
@@ -99,19 +113,20 @@ import MusicData from "./MusicData";
           />
         </div>
         <div>
-          <h1>{currentSong.title}</h1>
-          <h4>{currentSong.artist}</h4>
+          <p className="font-bold text-gray-600">{currentSong.title}</p>
+          <p className="text-gray-600">{currentSong.artist}</p>
         </div>
         <input
         className="
         w-48
         appearance-none bg-transparent
-        [&::-webkit-slider-runnable-track]:bg-gray-100
+        border-solid border-2 border-gray-300 rounded-full
+        [&::-webkit-slider-runnable-track]:bg-gray-300
         [&::-webkit-slider-runnable-track]:rounded-full
         [&::-webkit-slider-thumb]:appearance-none
         [&::-webkit-slider-thumb]:h-3
         [&::-webkit-slider-thumb]:w-3
-        [&::-webkit-slider-thumb]:bg-blue-500
+        [&::-webkit-slider-thumb]:bg-gray-100
         [&::-webkit-slider-thumb]:rounded-full
         "
         type="range"
@@ -120,36 +135,42 @@ import MusicData from "./MusicData";
         value={timePosition}
         onInput={handleChangeTimePosition}>
         </input>
-        <div>
-        <button onClick={handlePrevious}>戻る</button>
-        <motion.button 
-        className="rotate-90 text-gray-600"
-        onClick={togglePlayPause}
-        whileTap="tap"
-        whileHover="hover">
-        {isPlaying ? "〓" : "▲"}
-        </motion.button>
-        <button onClick={handleNext}>次へ</button>
+        <div className="flex justify-center">
+          <button onClick={handlePrevious}>
+            <img className="size-4 rotate-180" src="/img/componentImage/skip.png" alt="" />
+          </button>
+          <motion.button 
+          className="rotate-90 text-gray-600 ml-2 mr-2"
+          onClick={togglePlayPause}
+          whileTap="tap"
+          whileHover="hover">
+          {isPlaying ? "〓" : "▲"}
+          </motion.button>
+          <button onClick={handleNext}>
+            <img className="size-4" src="/img/componentImage/skip.png" alt="" />
+          </button>
         </div>
         <audio 
         ref={audioRef}
         src={currentSong.musicUrl}
+        preload="metadata"
         onEnded={handleNext}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         />
         <div className="flex justify-center">
-          <img src="/img/vol_0.png" alt="" className="size-4 mr-1"/>
-          <input
+          <img src="/img/componentImage/vol_0.png" alt="" className="size-4 mr-1"/>
+          <motion.input
           className="
           w-36
+          border-solid border-2 border-gray-300 rounded-full
           appearance-none bg-transparent
-          [&::-webkit-slider-runnable-track]:bg-gray-100
+          [&::-webkit-slider-runnable-track]:bg-gray-300
           [&::-webkit-slider-runnable-track]:rounded-full
           [&::-webkit-slider-thumb]:appearance-none
           [&::-webkit-slider-thumb]:h-3
           [&::-webkit-slider-thumb]:w-3
-          [&::-webkit-slider-thumb]:bg-blue-500
+          [&::-webkit-slider-thumb]:bg-gray-100
           [&::-webkit-slider-thumb]:rounded-full
           "
           type="range"
@@ -159,8 +180,10 @@ import MusicData from "./MusicData";
           defaultValue={50}
           step={1}
           onChange={(e) => handleVolumeChange([parseInt(e.target.value)])}
-          ></input>
-          <img src="/img/vol_100.png" alt="" className="size-4 ml-1"/>
+          whileTap="tap"
+          whileHover="hover"
+          ></motion.input>
+          <img src="/img/componentImage/vol_100.png" alt="" className="size-4 ml-1"/>
         </div>
       </div>
       
