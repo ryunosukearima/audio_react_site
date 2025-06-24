@@ -106,10 +106,9 @@ import MusicData from "./MusicData";
       <div className="bg-gray-100 rounded-2xl p-4">
         <div className="text-center">
           <img
-          className="inline-block rounded-2xl"
+          className="size-52 rounded-2xl md:size-96 lg:size-80"
           src={currentSong.coverUrl}
           alt="Cover"
-          style={{ width: "200px", height: "200px" }}
           />
         </div>
         <div>
