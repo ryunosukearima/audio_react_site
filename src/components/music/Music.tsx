@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { motion } from "motion/react"
+import { motion, useAnimation } from "framer-motion"
 import MusicData from "./MusicData";
 
   type song = {
@@ -49,7 +49,7 @@ import MusicData from "./MusicData";
   const [duration, setDuration] = useState(0);
   const [timePosition, setTimePosition] = useState(0);
   const [volume, setVolume] = useState(50);
-
+  
 
   const handlePrevious = () => {
     setCurrentSongIndex(
@@ -103,67 +103,26 @@ import MusicData from "./MusicData";
 
   return (
     <div className="flex justify-center text-center">
-      <div className="bg-gray-100 rounded-2xl p-4">
-        <div className="text-center">
-          <img
-          className="size-52 rounded-2xl md:size-96 lg:size-80"
+      <div className="bg-gray-100 rounded-2xl p-7 pb-10">
+        <div className="flex justify-center">
+          <motion.img
+          className="size-48 opacity-80 rounded-2xl md:size-80 lg:size-80"
           src={currentSong.coverUrl}
           alt="Cover"
+          animate={{scale: isPlaying ? 1.1 : 1, opacity: isPlaying ? 1 : 0.8}}
+          transition={{ duration: 0.4 }}
           />
         </div>
-        <div>
-          <p className="font-bold text-gray-600">{currentSong.title}</p>
-          <p className="text-gray-600">{currentSong.artist}</p>
-        </div>
-        <input
-        className="
-        w-48
-        appearance-none bg-transparent
-        border-solid border-2 border-gray-300 rounded-full
-        [&::-webkit-slider-runnable-track]:bg-gray-300
-        [&::-webkit-slider-runnable-track]:rounded-full
-        [&::-webkit-slider-thumb]:appearance-none
-        [&::-webkit-slider-thumb]:h-3
-        [&::-webkit-slider-thumb]:w-3
-        [&::-webkit-slider-thumb]:bg-gray-100
-        [&::-webkit-slider-thumb]:rounded-full
-        "
-        type="range"
-        min={0}
-        max={duration}
-        value={timePosition}
-        onInput={handleChangeTimePosition}>
-        </input>
-        <div className="flex justify-center">
-          <button onClick={handlePrevious}>
-            <img className="size-4 rotate-180" src="/img/componentImage/skip.png" alt="" />
-          </button>
-          <motion.button 
-          className="rotate-90 text-gray-600 ml-2 mr-2"
-          onClick={togglePlayPause}
-          whileTap="tap"
-          whileHover="hover">
-          {isPlaying ? "〓" : "▲"}
-          </motion.button>
-          <button onClick={handleNext}>
-            <img className="size-4" src="/img/componentImage/skip.png" alt="" />
-          </button>
-        </div>
-        <audio 
-        ref={audioRef}
-        src={currentSong.musicUrl}
-        preload="metadata"
-        onEnded={handleNext}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        />
-        <div className="flex justify-center">
-          <img src="/img/componentImage/vol_0.png" alt="" className="size-4 mr-1"/>
-          <motion.input
+        <div className="pt-1">
+          <div>
+            <p className="font-bold text-gray-600">{currentSong.title}</p>
+            <p className="text-gray-600">{currentSong.artist}</p>
+          </div>
+        <motion.input
           className="
-          w-36
-          border-solid border-2 border-gray-300 rounded-full
+          w-48
           appearance-none bg-transparent
+          border-solid border-2 border-gray-300 rounded-full
           [&::-webkit-slider-runnable-track]:bg-gray-300
           [&::-webkit-slider-runnable-track]:rounded-full
           [&::-webkit-slider-thumb]:appearance-none
@@ -173,21 +132,62 @@ import MusicData from "./MusicData";
           [&::-webkit-slider-thumb]:rounded-full
           "
           type="range"
-          value={volume}
-          max={100}
           min={0}
-          defaultValue={50}
-          step={1}
-          onChange={(e) => handleVolumeChange([parseInt(e.target.value)])}
-          whileTap="tap"
-          whileHover="hover"
-          ></motion.input>
-          <img src="/img/componentImage/vol_100.png" alt="" className="size-4 ml-1"/>
+          max={duration}
+          value={timePosition}
+          whileTap={{ scale: 1.1 }}
+          onInput={handleChangeTimePosition}>
+          </motion.input>
+          <div className="flex justify-center md:">
+            <button onClick={handlePrevious}>
+              <img className="size-4 rotate-180" src="/img/componentImage/skip.png" alt="" />
+            </button>
+            <motion.button
+            className="rotate-90 text-gray-600 ml-2 mr-2"
+            onClick={togglePlayPause}
+            >
+            {isPlaying ? "〓" : "▲"}
+            </motion.button>
+            <button onClick={handleNext}>
+              <img className="size-4" src="/img/componentImage/skip.png" alt="" />
+            </button>
+          </div>
+          <audio 
+          ref={audioRef}
+          src={currentSong.musicUrl}
+          preload="metadata"
+          onEnded={handleNext}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+          />
+          <motion.div className="flex justify-center" whileTap={{ scale: 1.1 }}>
+            <img src="/img/componentImage/vol_0.png" alt="" className="size-4 mr-1"/>
+            <motion.input
+            className="
+            w-36 md:w-48 lg:w-48
+            border-solid border-2 border-gray-300 rounded-full
+            appearance-none bg-transparent
+            [&::-webkit-slider-runnable-track]:bg-gray-300
+            [&::-webkit-slider-runnable-track]:rounded-full
+            [&::-webkit-slider-thumb]:appearance-none
+            [&::-webkit-slider-thumb]:h-3
+            [&::-webkit-slider-thumb]:w-3
+            [&::-webkit-slider-thumb]:bg-gray-100
+            [&::-webkit-slider-thumb]:rounded-full
+            "
+            type="range"
+            value={volume}
+            max={100}
+            min={0}
+            defaultValue={50}
+            step={1}
+            onChange={(e) => handleVolumeChange([parseInt(e.target.value)])}
+            // whileTap={{ scale: 1.1 }}
+            ></motion.input>
+            <img src="/img/componentImage/vol_100.png" alt="" className="size-4 ml-1"/>
+          </motion.div>
         </div>
       </div>
-      
-      
-
     </div>
   );
 }
