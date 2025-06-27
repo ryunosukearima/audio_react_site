@@ -103,10 +103,10 @@ import MusicData from "./MusicData";
 
   return (
     <div className="flex justify-center text-center">
-      <div className="bg-gray-100 rounded-2xl p-7 pb-10">
+      <div className="bg-gray-100 rounded-2xl p-7 pb-10 md:p-10 lg:p-13">
         <div className="flex justify-center">
           <motion.img
-          className="size-48 opacity-80 rounded-2xl md:size-80 lg:size-80"
+          className="size-48 mb-1 opacity-80 rounded-2xl md:size-72 md:mb-3 lg:size-96"
           src={currentSong.coverUrl}
           alt="Cover"
           animate={{scale: isPlaying ? 1.1 : 1, opacity: isPlaying ? 1 : 0.8}}
@@ -121,6 +121,9 @@ import MusicData from "./MusicData";
         <motion.input
           className="
           w-48
+          md:w-64
+          lg:w-96
+          mb-0
           appearance-none bg-transparent
           border-solid border-2 border-gray-300 rounded-full
           [&::-webkit-slider-runnable-track]:bg-gray-300
@@ -138,18 +141,19 @@ import MusicData from "./MusicData";
           whileTap={{ scale: 1.1 }}
           onInput={handleChangeTimePosition}>
           </motion.input>
-          <div className="flex justify-center md:">
-            <button onClick={handlePrevious}>
-              <img className="size-4 rotate-180" src="/img/componentImage/skip.png" alt="" />
+          
+          <div className="flex justify-center items-center">
+            <button className="size-4 rotate-180" onClick={handlePrevious}>
+              <img src="/img/componentImage/skip.png" alt="" />
             </button>
             <motion.button
-            className="rotate-90 text-gray-600 ml-2 mr-2"
+            className="flex justify-center rotate-90 text-gray-600 md:text-2xl"
             onClick={togglePlayPause}
             >
             {isPlaying ? "〓" : "▲"}
             </motion.button>
-            <button onClick={handleNext}>
-              <img className="size-4" src="/img/componentImage/skip.png" alt="" />
+            <button className="size-4" onClick={handleNext}>
+              <img src="/img/componentImage/skip.png" alt="" />
             </button>
           </div>
           <audio 
@@ -160,7 +164,8 @@ import MusicData from "./MusicData";
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           />
-          <motion.div className="flex justify-center" whileTap={{ scale: 1.1 }}>
+
+          <motion.div className="flex justify-center items-center" whileTap={{ scale: 1.1 }}>
             <img src="/img/componentImage/vol_0.png" alt="" className="size-4 mr-1"/>
             <motion.input
             className="
