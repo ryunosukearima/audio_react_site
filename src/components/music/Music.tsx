@@ -1,9 +1,11 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion"
-import MusicBer from "./MusicBer";
+import MusicVol from "./MusicVol";
 import MusicButton from "./MusicButton";
+import MusicButtom from "./MusicButtom";
+import MusicTime from "./MusicTime";
 
-  type song = {
+    type song = {
     id: number;
     title: string;
     artist: string;
@@ -14,150 +16,143 @@ import MusicButton from "./MusicButton";
     const songs: song[] = [
     {
         id: 1,
-        title: "mix1",
-        artist: "artist1",
-        coverUrl: "/img/audioImage/walkure.jpg",
-        musicUrl: "/audio/FIRST_LOVE_SONG.mp3",
+        title: "7 Girls War",
+        artist: "Wake Up, Girls!",
+        coverUrl: "/img/audioImage/7 Girls War.jpg",
+        musicUrl: "/audio/7 Girls War.mp3",
     },
     {
     id: 2,
-    title: "mix2",
-    artist: "artist2",
-    coverUrl: "/img/audioImage/kiri.jpg",
-    musicUrl: "/audio/Meteor_Light.mp3"     
+    title: "Beyond the Bottom",
+    artist: "Wake Up, Girls!",
+    coverUrl: "/img/audioImage/Beyond the Bottom.jpg",
+    musicUrl: "/audio/Beyond the Bottom.mp3"     
     },
     {
-    id: 2,
-    title: "mix3",
-    artist: "artist3",
-    coverUrl: "/img/audioImage/misuzu.jpg",
-    musicUrl: "/audio/Howling_over_the_World.mp3"     
+    id: 3,
+    title: "Polaris",
+    artist: "Wake Up, Girls!",
+    coverUrl: "/img/audioImage/Polaris.jpg",
+    musicUrl: "/audio/Polaris.mp3"     
     },
     {
-    id: 2,
-    title: "mix4",
-    artist: "artist4",
-    coverUrl: "/img/audioImage/kiri.jpg",
-    musicUrl: "/audio/Meteor_Light.mp3"     
+    id: 4,
+    title: "タチアガレ!",
+    artist: "Wake Up, Girls!",
+    coverUrl: "/img/audioImage/タチアガレ!.jpg",
+    musicUrl: "/audio/タチアガレ!.mp3"     
+    },
+        {
+    id: 4,
+    title: "言の葉 青葉",
+    artist: "Wake Up, Girls!",
+    coverUrl: "/img/audioImage/言の葉 青葉.jpg",
+    musicUrl: "/audio/言の葉 青葉.mp3"     
+    },
+        {
+    id: 4,
+    title: "少女交響曲",
+    artist: "Wake Up, Girls!",
+    coverUrl: "/img/audioImage/少女交響曲.jpg",
+    musicUrl: "/audio/少女交響曲.mp3"     
     }
-  ]
+    ];
 
-  const Music = () => {
-  const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const currentSong = songs[currentSongIndex];
-  const [duration, setDuration] = useState(0);
-  const [timePosition, setTimePosition] = useState(0);
-  const [volume, setVolume] = useState(50);
-  
+    const Music = () => {
+    const [currentSongIndex, setCurrentSongIndex] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const currentSong = songs[currentSongIndex];
+    const [duration, setDuration] = useState(0);
+    const [timePosition, setTimePosition] = useState(0);
+    const [volume, setVolume] = useState(50);
 
-  const handlePrevious = () => {
+    const handlePrevious = () => {
     setCurrentSongIndex(
-      (prevIndex) => (prevIndex - 1 + songs.length) % songs.length
+        (prevIndex) => (prevIndex - 1 + songs.length) % songs.length
     );
     setIsPlaying(false);
-  };
+    };
 
-  const handleNext = () => {
+    const handleNext = () => {
     setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
     setIsPlaying(false);
-  };
+    };
 
-  const togglePlayPause = () => {
+    const togglePlayPause = () => {
     if (!audioRef.current) return;
 
     if (isPlaying) {
-      audioRef.current.pause();
+        audioRef.current.pause();
     } else {
-      audioRef.current.play();
+        audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
-  };
+    };
 
-  const handleTimeUpdate = () => {
+    const handleTimeUpdate = () => {
     setTimePosition(audioRef.current.currentTime);
-  };
+    };
 
-  const handleEnded = () => {
+    const handleEnded = () => {
     setTimePosition(0);
     setPlayState('stop');
-  };
+    };
 
-  const handleLoadedMetadata = () => {
+    const handleLoadedMetadata = () => {
     const duration = audioRef.current.duration;
     setDuration(duration);
-  };
+    };
 
-  const handleChangeTimePosition = (e) => {
+    const handleChangeTimePosition = (e) => {
     const position = parseInt(e.target.value);
     setTimePosition(position);
     audioRef.current.currentTime = position;
-  };
+    };
 
-  const handleVolumeChange = (value: number[]) => {
-    setVolume(value[0]); // スライダーの値をvolume状態に反映
+    const handleVolumeChange = (value: number) => {
+    setVolume(value); // スライダーの値をvolume状態に反映
     if (audioRef.current) {
-      audioRef.current.volume = value[0] / 100;
+        audioRef.current.volume = value / 100;
     }
-  };
+    };
 
-  return (
-    <div className="flex justify-center text-center">
-      <div className="bg-gray-100 rounded-2xl p-7 pb-10 md:p-10 lg:p-13">
+    useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
+    }
+  }, [audioRef, volume]);
+
+
+    return (
+    <div className="flex justify-center items-center text-center pt-40">
+        <div className="bg-gray-200 rounded-2xl p-7 pb-10 md:p-10 lg:p-13">
         <div className="flex justify-center">
-          <motion.img
-          className="size-48 mb-1 opacity-80 rounded-2xl md:size-72 md:mb-3 lg:size-96"
-          src={currentSong.coverUrl}
-          alt="Cover"
-          animate={{scale: isPlaying ? 1.1 : 1, opacity: isPlaying ? 1 : 0.8}}
-          transition={{ duration: 0.4 }}
-          />
+            <motion.img
+            className="size-48 mb-1 opacity-80 rounded-2xl md:size-72 md:mb-3 lg:size-96"
+            src={currentSong.coverUrl}
+            alt="Cover"
+            animate={{scale: isPlaying ? 1.1 : 1, opacity: isPlaying ? 1 : 0.8}}
+            transition={{ duration: 0.4 }}
+            />
         </div>
         <div className="pt-1">
-          <div>
-            <p className="font-bold text-gray-600">{currentSong.title}</p>
-            <p className="text-gray-600">{currentSong.artist}</p>
-          </div>
-          <motion.input
-            className="
-            w-48
-            md:w-64
-            lg:w-96
-            appearance-none bg-transparent
-            border-solid border-2 border-gray-300 rounded-full
-            [&::-webkit-slider-runnable-track]:bg-gray-300
-            [&::-webkit-slider-runnable-track]:rounded-full
-            [&::-webkit-slider-thumb]:appearance-none
-            [&::-webkit-slider-thumb]:h-3
-            [&::-webkit-slider-thumb]:w-3
-            [&::-webkit-slider-thumb]:bg-gray-100
-            [&::-webkit-slider-thumb]:rounded-full
-            "
-            type="range"
-            min={0}
-            max={duration}
-            value={timePosition}
-            whileTap={{ scale: 1.1 }}
-            onInput={handleChangeTimePosition}>
-            </motion.input>
-            
-            <div className="flex justify-center items-center mb-1">
-              <button className="size-4 rotate-180" onClick={handlePrevious}>
-                <img src="/img/componentImage/skip.png" alt="" />
-              </button>
-              <motion.button
-              className="flex justify-center rotate-90 text-gray-600 md:text-2xl"
-              onClick={togglePlayPause}
-              >
-              {isPlaying ? "〓" : "▲"}
-              </motion.button>
-              <button className="size-4" onClick={handleNext}>
-                <img src="/img/componentImage/skip.png" alt="" />
-              </button>
+            <div>
+                <p className="font-bold text-gray-600">{currentSong.title}</p>
+                <p className="text-gray-600">{currentSong.artist}</p>
             </div>
-            {/* <MusicButton
-            /> */}
+            <MusicTime
+            onhandleChangeTimePosition = {handleChangeTimePosition}
+            onduration = {duration}
+            ontimePosition ={timePosition}
+            />
+            <div className="flex justify-center items-center mb-1">
+                <MusicButton
+                isPlaying={isPlaying}
+                onhandlePrevious={handlePrevious}
+                onhandleNext={handleNext}
+                onTogglePlayPause={togglePlayPause}/>
+            </div>
             <audio
             ref={audioRef}
             src={currentSong.musicUrl}
@@ -166,18 +161,14 @@ import MusicButton from "./MusicButton";
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             />
-            <MusicBer
-              value={volume}
-              max={100}
-              min={0}
-              defaultValue={50}
-              step={1}
-              onChange={(e) => handleVolumeChange([parseInt(e.target.value)])}
+            <MusicButtom
+            onvalue={volume}
+            onhandleVolumeChange={handleVolumeChange}
             />
+            </div>
         </div>
-      </div>
     </div>
-  );
+    );
 }
 
 export default Music

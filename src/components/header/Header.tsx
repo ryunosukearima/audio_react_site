@@ -4,7 +4,7 @@ import React from 'react'
 const Header = () => {
   return (
     <div>
-      dasa
+      <h1 className="text-2xl font-bold"></h1>
     </div>
   )
 }
